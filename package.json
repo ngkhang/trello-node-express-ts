@@ -1,0 +1,22 @@
+{
+  "name": "trello-node-express-ts",
+  "version": "1.0.0",
+  "description": "The Trello clone backend built with Node.js - Express.JS and TypeScript",
+  "license": "ISC",
+  "author": "Khang Nguyen",
+  "type": "commonjs",
+  "main": "server.js",
+  "keywords": [
+    "nodejs",
+    "express.js",
+    "typescript"
+  ],
+  "homepage": "https://github.com/ngkhang/trello-node-express-ts#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngkhang/trello-node-express-ts.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
