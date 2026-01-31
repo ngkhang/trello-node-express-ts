@@ -5,6 +5,7 @@
 
 import type { Express } from 'express';
 import express from 'express';
+
 import routes from './routes';
 
 export const createApp = (): Express => {
@@ -16,7 +17,7 @@ export const createApp = (): Express => {
   app.use(express.json());
 
   // API Routes
-  app.use('/api', routes)
+  app.use('/api', routes);
 
   return app;
-}
+};

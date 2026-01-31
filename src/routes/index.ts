@@ -13,7 +13,7 @@ routes.get('/', (_req: Request, res: Response) => {
   res.status(StatusCodes.OK).json({
     statusCode: StatusCodes.OK,
     message: ReasonPhrases.OK,
-  })
+  });
 });
 
 export default routes;

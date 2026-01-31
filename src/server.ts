@@ -3,7 +3,7 @@
  * Last Updated: 2026-01-31
  ------------------------------------------------- */
 
-import { createApp } from "./app";
+import { createApp } from './app';
 
 const PORT = 3000;
 const HOST = 'localhost';
@@ -14,10 +14,9 @@ const server = async () => {
   app.listen(PORT, () => {
     console.info(`Server in running at http://${HOST}:${PORT}`);
   });
-}
+};
 
-server()
-  .catch((err) => {
-    console.error(err);
-    process.exit(1);
-  })
+server().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
