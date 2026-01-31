@@ -8,6 +8,8 @@ import express from 'express';
 
 import routes from './routes';
 
+import { corsMiddleware } from '~/config/cors.config';
+
 export const createApp = (): Express => {
   const app = express();
 
@@ -15,6 +17,8 @@ export const createApp = (): Express => {
   app.use(express.urlencoded({ extended: true }));
   // Parse JSON request bodies
   app.use(express.json());
+  // CORS
+  app.use(corsMiddleware);
 
   // API Routes
   app.use('/api', routes);

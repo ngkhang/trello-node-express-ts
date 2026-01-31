@@ -17,12 +17,14 @@ interface Env {
   NODE_ENV: string;
   APP_HOST: string;
   APP_PORT: number;
+  APP_CORS_ORIGIN: string;
 }
 
 const envSchema = Joi.object<Env>({
   NODE_ENV: Joi.string().valid('development', 'test', 'production'),
   APP_HOST: Joi.string().required(),
   APP_PORT: Joi.number().port().required(),
+  APP_CORS_ORIGIN: Joi.string().required(),
 }).unknown(true);
 
 const validateEnv = () => {
@@ -38,6 +40,7 @@ const validateEnv = () => {
     app: {
       host: value.APP_HOST,
       port: value.APP_PORT,
+      corsOrigin: value.APP_CORS_ORIGIN,
     },
   };
 };
