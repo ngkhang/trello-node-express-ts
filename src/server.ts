@@ -5,14 +5,15 @@
 
 import { createApp } from './app';
 
-const PORT = 3000;
-const HOST = 'localhost';
+import { env } from '~/config/env.config';
+
+const { host, port } = env.app;
 
 const server = async () => {
   const app = createApp();
 
-  app.listen(PORT, () => {
-    console.info(`Server in running at http://${HOST}:${PORT}`);
+  app.listen(port, () => {
+    console.info(`Server in running at http://${host}:${port}`);
   });
 };
 
