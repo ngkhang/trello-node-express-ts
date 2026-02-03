@@ -1,6 +1,6 @@
 /* --------------------------------------------------
  * Author: Khang Nguyen - https://github.com/ngkhang
- * Last Updated: 2026-01-31
+ * Last Updated: 2026-02-03
  ------------------------------------------------- */
 
 import dotenv from 'dotenv';
@@ -18,6 +18,8 @@ interface Env {
   APP_HOST: string;
   APP_PORT: number;
   APP_CORS_ORIGIN: string;
+  DB_MONGO_NAME: string;
+  DB_MONGO_URI: string;
 }
 
 const envSchema = Joi.object<Env>({
@@ -25,7 +27,11 @@ const envSchema = Joi.object<Env>({
   APP_HOST: Joi.string().required(),
   APP_PORT: Joi.number().port().required(),
   APP_CORS_ORIGIN: Joi.string().required(),
-}).unknown(true);
+  DB_MONGO_NAME: Joi.string().required(),
+  DB_MONGO_URI: Joi.string().uri().required(),
+})
+  .unknown(true)
+  .prefs({ errors: { label: 'key' } });
 
 const validateEnv = () => {
   const { error, value } = envSchema.validate(process.env, { abortEarly: false });
@@ -41,6 +47,10 @@ const validateEnv = () => {
       host: value.APP_HOST,
       port: value.APP_PORT,
       corsOrigin: value.APP_CORS_ORIGIN,
+    },
+    db: {
+      name: value.DB_MONGO_NAME,
+      uri: value.DB_MONGO_URI,
     },
   };
 };

@@ -1,23 +1,31 @@
 /* --------------------------------------------------
  * Author: Khang Nguyen - https://github.com/ngkhang
- * Last Updated: 2026-01-31
+ * Last Updated: 2026-02-03
  ------------------------------------------------- */
 
 import { createApp } from './app';
 
+import { connectMongoDb } from '~/config/database.config';
 import { env } from '~/config/env.config';
 
 const { host, port } = env.app;
 
-const server = async () => {
-  const app = createApp();
+const createServer = async () => {
+  try {
+    console.info(`Connecting DB...`);
+    await connectMongoDb();
+    console.info(`Connected to MongoDb Cloud Atlas`);
 
-  app.listen(port, () => {
-    console.info(`Server in running at http://${host}:${port}`);
-  });
+    console.info(`Initial App...`);
+    const app = createApp();
+
+    app.listen(port, () => {
+      console.info(`Server in running at http://${host}:${port}`);
+    });
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
 };
 
-server().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+void createServer();
