@@ -1,19 +1,16 @@
 /* --------------------------------------------------
  * Author: Khang Nguyen - https://github.com/ngkhang
- * Last Updated: 2026-01-31
+ * Last Updated: 2026-02-04
  ------------------------------------------------- */
 
 import type { Request, Response } from 'express';
 import { Router } from 'express';
-import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+
+import { OkResponse } from '~/core/http/responses/api-success.response';
 
 const routes = Router();
 
 routes.get('/', (_req: Request, res: Response) => {
-  res.status(StatusCodes.OK).json({
-    statusCode: StatusCodes.OK,
-    message: ReasonPhrases.OK,
-  });
+  return new OkResponse().send(res);
 });
-
 export default routes;
