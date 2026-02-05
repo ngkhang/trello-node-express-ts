@@ -1,13 +1,13 @@
 /* --------------------------------------------------
  * Author: Khang Nguyen - https://github.com/ngkhang
- * Last Updated: 2026-02-04
+ * Last Updated: 2026-02-05
  ------------------------------------------------- */
 
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 
 import type { ErrorDetail, ErrorResponse } from '~/types/api-response.type';
 
-export class ApiErrorResponse extends Error implements ErrorResponse {
+export default class ApiErrorResponse extends Error implements ErrorResponse {
   public isSuccess = false;
   public name = 'ApiError';
   public timestamp = new Date().toISOString();
@@ -28,6 +28,7 @@ export class ApiErrorResponse extends Error implements ErrorResponse {
     this.path = path;
     this.details = details;
 
+    Object.setPrototypeOf(this, new.target.prototype);
     Error.captureStackTrace(this, this.constructor);
   }
 }

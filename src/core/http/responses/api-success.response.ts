@@ -8,7 +8,7 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 
 import type { SuccessResponse } from '~/types/api-response.type';
 
-export class ApiSuccessResponse<T> implements SuccessResponse<T | null> {
+export default class ApiSuccessResponse<T> implements SuccessResponse<T | null> {
   public isSuccess = true;
   public timestamp = new Date().toISOString();
   public statusCode: number;

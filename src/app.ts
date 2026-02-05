@@ -1,10 +1,10 @@
 /* --------------------------------------------------
  * Author: Khang Nguyen - https://github.com/ngkhang
- * Last Updated: 2026-02-04
+ * Last Updated: 2026-02-05
  ------------------------------------------------- */
 
 import cookieParser from 'cookie-parser';
-import type { Express, Request, Response, NextFunction } from 'express';
+import type { Express } from 'express';
 import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
@@ -12,8 +12,7 @@ import morgan from 'morgan';
 import routes from './routes';
 
 import { corsMiddleware } from '~/config/cors.config';
-import { NotFound } from '~/core/http/responses/api-error.response';
-import { errorHandlingMiddleware } from '~/middlewares/error-handling.middleware';
+import { errorHandlingMiddleware, notFoundRouteMiddleware } from '~/middlewares';
 
 export const createApp = (): Express => {
   const app = express();
@@ -35,12 +34,7 @@ export const createApp = (): Express => {
   app.use('/api', routes);
 
   // 404 Handler - catches undefined routes
-  app.use('/{*splat}', (req: Request, _res: Response, next: NextFunction) => {
-    const errNotFound = new NotFound({
-      message: `Can't find ${req.method}: "${req.originalUrl}" on the server!`,
-    });
-    next(errNotFound);
-  });
+  app.use('/{*splat}', notFoundRouteMiddleware);
 
   // Error Handler middleware- catches all errors
   app.use(errorHandlingMiddleware);
