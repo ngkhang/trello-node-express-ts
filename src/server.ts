@@ -1,12 +1,12 @@
 /* --------------------------------------------------
  * Author: Khang Nguyen - https://github.com/ngkhang
- * Last Updated: 2026-02-03
+ * Last Updated: 2026-02-06
  ------------------------------------------------- */
 
 import { createApp } from './app';
 
 import { connectMongoDb } from '~/config/database.config';
-import { env } from '~/config/env.config';
+import env from '~/config/env.config';
 
 const { host, port } = env.app;
 

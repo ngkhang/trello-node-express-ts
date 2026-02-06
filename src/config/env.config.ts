@@ -1,58 +1,40 @@
 /* --------------------------------------------------
  * Author: Khang Nguyen - https://github.com/ngkhang
- * Last Updated: 2026-02-03
+ * Last Updated: 2026-02-06
  ------------------------------------------------- */
 
 import dotenv from 'dotenv';
-import Joi from 'joi';
-
-import { formatJoiErrors } from '~/utils/formatErrors.util';
+import * as z from 'zod';
 
 dotenv.config({
   path: '.env',
   quiet: process.env.NODE_ENV === 'test',
 });
 
-interface Env {
-  NODE_ENV: string;
-  APP_HOST: string;
-  APP_PORT: number;
-  APP_CORS_ORIGIN: string;
-  DB_MONGO_NAME: string;
-  DB_MONGO_URI: string;
-}
+export const NODE_ENVIRONMENT = ['development', 'test', 'production'] as const;
 
-const envSchema = Joi.object<Env>({
-  NODE_ENV: Joi.string().valid('development', 'test', 'production'),
-  APP_HOST: Joi.string().required(),
-  APP_PORT: Joi.number().port().required(),
-  APP_CORS_ORIGIN: Joi.string().required(),
-  DB_MONGO_NAME: Joi.string().required(),
-  DB_MONGO_URI: Joi.string().uri().required(),
-})
-  .unknown(true)
-  .prefs({ errors: { label: 'key' } });
+const schema = z.object({
+  NODE_ENV: z.enum(NODE_ENVIRONMENT).default('development'),
+  APP_HOST: z.string(),
+  APP_PORT: z.coerce.number().min(0).max(65553),
+  APP_CORS_ORIGIN: z.string(),
+  DB_MONGO_NAME: z.string(),
+  DB_MONGO_URI: z.string(),
+});
 
-const validateEnv = () => {
-  const { error, value } = envSchema.validate(process.env, { abortEarly: false });
-  if (error) {
-    const formattedErrors = formatJoiErrors(error);
-    // TODO: Handle detail error messages
-    throw new Error(JSON.stringify(formattedErrors));
-  }
+const parsedEnv = schema.parse(process.env);
 
-  return {
-    nodeEnv: value.NODE_ENV,
-    app: {
-      host: value.APP_HOST,
-      port: value.APP_PORT,
-      corsOrigin: value.APP_CORS_ORIGIN,
-    },
-    db: {
-      name: value.DB_MONGO_NAME,
-      uri: value.DB_MONGO_URI,
-    },
-  };
+const env = {
+  nodeEnv: parsedEnv.NODE_ENV,
+  app: {
+    host: parsedEnv.APP_HOST,
+    port: parsedEnv.APP_PORT,
+    corsOrigin: parsedEnv.APP_CORS_ORIGIN,
+  },
+  db: {
+    name: parsedEnv.DB_MONGO_NAME,
+    uri: parsedEnv.DB_MONGO_URI,
+  },
 };
 
-export const env = validateEnv();
+export default env;

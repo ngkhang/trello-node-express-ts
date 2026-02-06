@@ -9,7 +9,7 @@ import cors from 'cors';
 import type { CorsOptions } from 'cors';
 import { StatusCodes } from 'http-status-codes';
 
-import { env } from './env.config';
+import env, { NODE_ENVIRONMENT } from './env.config';
 
 const allowedOrigins = env.app.corsOrigin.split(',').map((o) => o.trim());
 
@@ -25,7 +25,8 @@ const corsOptions: CorsOptions = {
   // Access-Control-Allow-Origin
   origin(requestOrigin, callback) {
     if (!requestOrigin) {
-      if (['development', 'test'].includes(env.nodeEnv)) return callback(null, true);
+      if (NODE_ENVIRONMENT.includes(env.nodeEnv) && env.nodeEnv !== 'production')
+        return callback(null, true);
 
       // TODO: Add statusCode: StatusCodes.FORBIDDEN
       return callback(new Error('Origin is required'));

@@ -1,12 +1,12 @@
 /* --------------------------------------------------
  * Author: Khang Nguyen - https://github.com/ngkhang
- * Last Updated: 2026-02-05
+ * Last Updated: 2026-02-06
  ------------------------------------------------- */
 
 import type { Request, Response, NextFunction } from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 
-import { env } from '~/config/env.config';
+import env from '~/config/env.config';
 import ApiErrorResponse from '~/core/http/responses/api-error.response';
 import type { ErrorResponse } from '~/types/api-response.type';
 

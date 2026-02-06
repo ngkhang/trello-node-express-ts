@@ -1,6 +1,6 @@
 /* --------------------------------------------------
  * Author: Khang Nguyen - https://github.com/ngkhang
- * Last Updated: 2026-02-03
+ * Last Updated: 2026-02-06
  ------------------------------------------------- */
 
 import dns from 'dns';
@@ -8,7 +8,7 @@ import dns from 'dns';
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import type { Db } from 'mongodb';
 
-import { env } from '~/config/env.config';
+import env from '~/config/env.config';
 
 // Fix error: Error: querySrv ECONNREFUSED _mongodb._tcp.ngkhang-cluster0....mongodb.net
 dns.setServers(['8.8.8.8', '1.1.1.1']);
