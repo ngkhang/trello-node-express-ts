@@ -1,6 +1,6 @@
 /* --------------------------------------------------
  * Author: Khang Nguyen - https://github.com/ngkhang
- * Last Updated: 2026-02-05
+ * Last Updated: 2026-02-06
  ------------------------------------------------- */
 
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
@@ -42,5 +42,18 @@ export class NotFound extends ApiErrorResponse {
       details: params.details,
     });
     this.name = 'NotFound';
+  }
+}
+
+export class BadRequest extends ApiErrorResponse {
+  constructor(params: Partial<ErrorResponse> = {}) {
+    super({
+      statusCode: StatusCodes.BAD_REQUEST,
+      message: params.message || ReasonPhrases.BAD_REQUEST,
+      path: params.path,
+      details: params.details,
+    });
+
+    this.name = 'BadRequest';
   }
 }
